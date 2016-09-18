@@ -21,7 +21,8 @@
   14
   ```
   
-- there are many other kinds of expressions, which we will mostly ignore for now, for example: `string-append`
+- there are many other kinds of expressions, which we will mostly ignore for now, for example: `string-append`.
+
   ```scheme
   > (string-append "Hello" " world")
   "Hello world"
@@ -29,6 +30,7 @@
   
 ## 1.1.2 Naming
 - we can name values, and then use them
+
   ```scheme
   > (define size 2)
   > (+ 5 size)
@@ -38,6 +40,7 @@
 ## 1.1.3 Evaluating Combinations
 1. evaluate the subexpressions of the combination
 2. apply the procedure that is the value of the leftmost subexpression (the operator) to the arguments that are the values of the other subexpressions (the operands)
+
   ```scheme
   > (+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))
   57
@@ -45,6 +48,7 @@
 
 ## 1.1.4  Compound Procedures
 - functions are values, too
+
   ```scheme
   > (lambda (x) (* x x))
   #<procedure>
