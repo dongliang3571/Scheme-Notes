@@ -90,8 +90,7 @@
   > (define (cube x)
       (* x (square x)))
   ```
-  
-- 1.1.6 Conditional Expressions and Predicates
+## 1.1.6 Conditional Expressions and Predicates
   ```scheme
   ; cond experssion
   > (define (myabs x)
@@ -140,13 +139,17 @@
   > (define (a-plus-abs-b a b)
       ((if (> b 0) + -) a b))
   ```
-
-- Other built-in expression `min`, `max`
+## Other built-in expression `min`, `max`
   ```scheme
   > (min 1 2)
   1
   > (max 1 2)
   2
+  ```
+
+## `Let` Syntax
+  ```scheme
+  ()
   ```
 
 
