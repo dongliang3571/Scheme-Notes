@@ -1,5 +1,13 @@
 # Scheme-Notes
 
+## NOTE: Applicative order evaluation(aka eager evaluation) and Normal order evaluation(lazy evaluation)
+  ``` scheme
+  (define (try a b)
+    (if (= a 0) 1 b))
+    
+  ;Evaluating (try 0 (/ 1 0)) generates an error in Scheme. With lazy evaluation, there would be no error. Evaluating the  expression would return 1, because the argument (/ 1 0) would never be evaluated.
+  ```
+
 ## 1.1.1 Expressions
 - expressions are evaluated
 - some expressions are primitive
@@ -100,6 +108,8 @@
              ((expressionN) valueN)
              (else (value)))
              
+    ; once one of experssion is true, value is return and comparision won't continue
+             
   ; if expression
   > (define (myabs x)
       (if (< x 0)
@@ -111,3 +121,35 @@
           (value)
           (else value))
   ```
+
+- Scheme also supplies logical connectives such as and, or, not, `#t` is true, `#f` is false
+ 
+  ```scheme
+  > (define x 6)
+  > (and (> x 5) (< x 10))
+  #t
+  > (not (> x 4))
+  #f
+  ```
+
+- if statement can be used to evaluate procedures too
+  ```scheme
+  > (if (> 4 0) + -)
+  #<procedure:+>
+  
+  > (define (a-plus-abs-b a b)
+      ((if (> b 0) + -) a b))
+  ```
+
+- Other built-in expression `min`, `max`
+  ```scheme
+  > (min 1 2)
+  1
+  > (max 1 2)
+  2
+  ```
+
+
+
+  
+
