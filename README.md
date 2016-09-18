@@ -76,8 +76,38 @@
       (+ x y))
   ```
   
-  
-- if
+- function names can occur in other functions' bodies, too
   ```scheme
-  (if (comparison) if-exp else-exp)
+  ; here, square is global
+  > (define (cube x)
+      (* x (square x)))
+  ```
+  
+- 1.1.6 Conditional Expressions and Predicates
+  ```scheme
+  ; cond experssion
+  > (define (myabs x)
+      (cond ((> x 0) x)
+        ((= x 0) 0)
+        (else (- x))))
+    ; format:
+        (cond ((expression1) value1)
+             ((expression2) value2)
+             ((expression3) value3)
+              .                .
+              .                .
+              .                .
+             ((expressionN) valueN)
+             (else (value)))
+             
+  ; if expression
+  > (define (myabs x)
+      (if (< x 0)
+          (- x)
+          x))
+          
+  ; format:
+      (if (expression)
+          (value)
+          (else value))
   ```
