@@ -219,6 +219,83 @@
   ```
 
 
+## Factorial example
+  ```scheme
+  (define (fact x)
+  (cond ((= x 0) 1)
+    (else (* x (fact (- x 1))))))
+    
+  ; (fact 6)
+  ; (* 6 (fact 5))
+  ; (* 6 (* 5 (fact 4)))
+  ; (* 6 (* 5 (* 4 (fact 3))))
+  ; (* 6 (* 5 (* 4 (* 3 (fact 2)))))
+  ; (* 6 (* 5 (* 4 (* 3 (* 2 (fact 1))))))
+  ; (* 6 (* 5 (* 4 (* 3 (* 2 (* 1 (fact 0)))))))
+  ; (* 6 (* 5 (* 4 (* 3 (* 2 (* 1 1))))))
+  ; (* 6 (* 5 (* 4 (* 3 (* 2 1)))))
+  ; (* 6 (* 5 (* 4 (* 3 2))))
+  ; (* 6 (* 5 (* 4 6)))
+  ; (* 6 (* 5 24))
+  ; (* 6 120)
+  ; 720
+  
+  ; as you might expect, one certifies the correctness of fact using
+  ; induction on the non-negative integer input, x
+  
+  ; basis step: start with the smallest legal input, that is, x = 0
+  ;             and observe that (fact 0) = 1, which is correct.  
+  
+  ; induction hypothesis:  assume (fact k) works correctly, that is, 
+  ;             that the value returned by the call (fact k) is exactly
+  ;             the factorial of k (written k!, as you know)
+  
+  ; induction step:  we show, using the induction hypothesis, that (fact (+ k 1))
+  ;             works correctly.  According to the code, (fact (+ k 1)) returns
+  ;             (* (+ k 1) (fact k)).  If (fact k) = k!, as it must by the 
+  ;             induction hypothesis, then multiplying it by (+ k 1) certainly
+  ;             returns the factorial of (+ k 1).
+  
+  ; we would want to check in addition that the program terminates - that is, that it
+  ; does eventually return an answer.  we do this without using induction,
+  ; as follows: as n >= 0 is an integer,
+  ; and as each call to fact reduces the value of this parameter by 1, and as the procedure
+  ; halts when n = 0, we see that any call (fact n) will terminate.  
+  
+  ; another design for a factoral procedure does not create a chain of
+  ; deferred operations
+  
+  (define (new-fact x)
+    (fact-iter x 0 1))
+
+  (define (fact-iter x count result)
+    (if (= count x)
+        result
+        (fact-iter x (+ count 1) (* (+ count 1) result))))
+  
+  ; here we see that the work is done by updating the values of count and result
+
+  ;; (new-fact 6)
+  ;; (fact-iter 6 0 1)
+  ;; (fact-iter 6 1 1)
+  ;; (fact-iter 6 2 2)
+  ;; (fact-iter 6 3 6)
+  ;; (fact-iter 6 4 24)
+  ;; (fact-iter 6 5 120)
+  ;; (fact-iter 6 6 720)
+  
+  ; such processes are said to be linear recursive, or iterative
+
+
+  ; an alternate organization of the iterative version  casts fact-iter as a local function:
+  
+  (define (new-fact n)
+    (define (fact-iter count result)
+      (if (= count n)
+      result
+      (fact-iter (+ count 1) (* (+ count 1) result))))
+    (fact-iter 0 1))
+  ```
 
   
 
