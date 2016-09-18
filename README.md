@@ -5,8 +5,41 @@
   (define (try a b)
     (if (= a 0) 1 b))
     
-  ;Evaluating (try 0 (/ 1 0)) generates an error in Scheme. With lazy evaluation, there would be no error. Evaluating the  expression would return 1, because the argument (/ 1 0) would never be evaluated.
+  ;Evaluating (try 0 (/ 1 0)) generates an error in Scheme. With lazy evaluation, 
+  there would be no error. Evaluating the  expression would return 1, because the 
+  argument (/ 1 0) would never be evaluated.
+  
+  ; Another example
+  ; consider
+  (define (p) (p))
+  (define (test x y)
+    (if (= x 0)
+      0
+      y))
+  
+  > (test 0 (p))
+  ; give infinite loop, () will call p
+  
+  > (test 0 p)
+  0
+  ;give 0
+  
+  ; remark
+  > (if #t 0 (p))
+  0
+  ; returns 0 -- because if is a special form, the infinite loop (p) is never evaluated
   ```
+
+## Newton's method for getting square root
+1. want to compute square root of 2
+2. guess a number, eg. 1
+3. get Quotient of 2/1, which equals to 2
+4. take the average of Quotient and the number guessed, (2 + 1)/2, which equals to 1.5
+5. now repeat from step 2, results from step 4 will be the next number to be guessed
+6. get Quotient of 2/1.5, which equals to 1.3333
+7. take the average of Quotient and the number guessed, (1.3333 + 1.5)/2, which equals to 1.4167
+8. now repeat from step 2..................
+
 
 ## 1.1.1 Expressions
 - expressions are evaluated
@@ -148,8 +181,41 @@
   ```
 
 ## `Let` Syntax
+
   ```scheme
-  ()
+  ; let is Syntactic sugar for lambda followed by it's arguments that are first evaluted and then passed to the lambda which is then evaluated.
+
+  ((let ((x 2))
+    (+ x 1)))
+  ; is equivlent to  
+  ((lambda(x)
+    (+ x 1))
+    2)
+  ; but `let` can run itself alone
+  
+  
+  (define (square x)
+    (let ((m 3)
+          (n 3))
+    (* x m n))
+  )
+  > (square 2)
+  18
+  
+  ; it's a little different than `define`
+  
+  (define (square x)
+    (define m 3)
+    (define n 3)
+    (* x m n)
+  )
+  
+  > (square 2)
+  18
+  
+  ; results are the same, `let` can bind multiple value at one expression while `define` has 
+  to call multiple times in order to do the same thing.
+  ; Note: (let ((m 3)) ) it has extra parentheses surrounded around binding expression
   ```
 
 
