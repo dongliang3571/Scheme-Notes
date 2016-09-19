@@ -30,7 +30,7 @@
   ; returns 0 -- because if is a special form, the infinite loop (p) is never evaluated
   ```
 
-## Other built-in expression `min`, `max`
+## Other built-in Functions
   ```scheme
   > (min 1 2 3)
   1
