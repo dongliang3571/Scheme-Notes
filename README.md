@@ -297,5 +297,13 @@
     (fact-iter 0 1))
   ```
 
-  
+## 1.2 Procedures and the Processes they Generate
+- Recursive process(proper recursion)
+  - Linear recursive process
+  - Tree recursive process
+- Iterative process(tail recursion, eg. for, while)
+
+   key to certifying iteration procedures is 'invariant relation'
+  - Linear iterative process
+
 
