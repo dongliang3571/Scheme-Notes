@@ -30,6 +30,90 @@
   ; returns 0 -- because if is a special form, the infinite loop (p) is never evaluated
   ```
 
+## Other built-in expression `min`, `max`
+  ```scheme
+  > (min 1 2 3)
+  1
+  > (max 1 2 3)
+  3
+  
+  > (remainder 13 4)
+  1
+  > (remiander -13 4)
+  -1
+  
+  > (modulo 13 4)
+  1
+  > (modulo -13 4)
+  3
+  ;To get some number mod 4, you add whatever integer multiple of 4 it takes to get a number between 0 and 3. For -13, that integer is 4 because -13 + 4 x 4 is between 0 and 3
+  
+  > (quotient -35 7)
+  -5
+  
+  > (quotient 36 7)
+  5
+  ; quotient takes integers only
+  
+  > (gcd 32 4)
+  4
+  ; greatest common divisor
+  
+  > (magnitude -7)
+  7
+  > (magnitude 7)
+  7
+  ; absolute value
+  
+  > (= 2.0 2)
+  #t
+  ; compare only numbers, if want to compare string, use (eqv? string1 string2)
+  
+  > (eqv? "ab" "ab")
+  #t
+  ; compare
+  
+  > (zero? 0)
+  #f
+  ; test 0 value
+  
+  > (integer? 2)
+  #t
+  > (integer? 2.0)
+  #t
+  > (integer? 2.1)
+  #f
+  ; test integers
+  
+  > (or 1 0)
+  1
+  > (and 1 1)
+  1
+  > (not #f)
+  #t
+  
+  > (negative? -1)
+  #t
+  > (positive? 1)
+  #t
+  
+  ;;;;;;;;;;;;;;;;;;;;;;;;; List Functions ;;;;;;;;;;;;;;;;;;;
+  
+  > (quote (2 3))
+  (2 3)
+  > '(2 3)
+  (2 3)
+  ; both quote suspends evaluation of the list
+
+  > (list 1 7 3)
+  (1 7 3)
+  > (length '(1 2 3))
+  3
+  > (list (list 7 8 2))
+  3
+  ; length of the list
+  ```
+
 ## Newton's method for getting square root
 1. want to compute square root of 2
 2. guess a number, eg. 1
@@ -172,13 +256,7 @@
   > (define (a-plus-abs-b a b)
       ((if (> b 0) + -) a b))
   ```
-## Other built-in expression `min`, `max`
-  ```scheme
-  > (min 1 2)
-  1
-  > (max 1 2)
-  2
-  ```
+
 
 ## `Let` Syntax
 
