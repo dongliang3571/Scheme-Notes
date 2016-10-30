@@ -447,12 +447,92 @@ An atom is a string of letters, digits, or characters other than ( or ) - no spa
              
      
   ; an alternate design, which also corresponds (perhaps not as closely) to the definition
-
   (define alt-lat?
     (lambda (lst)
       (cond ((null? lst) #t)
             ((atom? (car lst)) (alt-lat? (cdr lst)))
             (else #f))))
+            
+            
+            
+  ; Check if a is in lat
+  (define member?
+    (lambda (a lat)
+     (cond 
+        ((null? lat) #f)
+        (else (or (eq? (car lat) a)
+                  (member? a (cdr lat)))))))
+                  
+                  
+  ; removing a from lat
+  (define rember2
+    (lambda (a lat)
+      (cond 
+        ((null? lat) (quote ()))
+        (else (cond ((eq? (car lat) a) (cdr lat))
+                    (else (cons (car lat) (rember2 a (cdr lat)))))))))
+                    
+  (rember2 'and '(bacon lettuce and tomato))
+  ; ==> (bacon lettuce tomato)
+                
+  
+  ; insert new on the right-hand side of occ in the lat, insertR, R is right
+  (define (insertR lat occ new)
+    (cond ((null? lat) '())
+	        ((eq? (car lat) occ) (cons (car lat) (cons new (cdr lat))))
+  	      (else (cons (car lat) (insertR (cdr lat) occ new)))))
+          
+  (insertR '(a b c d c e f) 'c 'new)
+  ; ==> (a b c new d c e f)
+  
+  
+  ; Multiple insert new to occ's right hand side
+  (define (multi-insertR lat occ new)
+    (cond ((null? lat) '())
+          ((eq? (car lat) occ) (cons (car lat) (cons new (multi-insertR (cdr lat) occ new))))
+          (else (cons (car lat) (multi-insertR (cdr lat) occ new)))))
+
+  (multi-insertR '(a b b) 'b 'new)
+  ; ==> (a b new b new)
+  
+  
+  
+  (define (insertL lat occ new)
+    (cond ((null? lat) '())
+	        ((eq? (car lat) occ) (cons new (cons (car lat) (cdr lat))))
+  	      (else (cons (car lat) (insertL (cdr lat) occ new)))))
+  
+    (insertL '(a b c d c e f) 'c 'new)
+    ; ==> (a b new c d c e f)
+  
+  
+  (define (multi-insertL lat occ new)
+    (cond ((null? lat) '())
+          ((eq? (car lat) occ) (cons new (cons (car lat) (multi-insertL (cdr lat) occ new))))
+          (else (cons (car lat) (multi-insertL (cdr lat) occ new)))))
+
+  (multi-insertL '(a b b) 'b 'new)
+  ; ==> (a new b new b)
+  
+  
+  
+  ; substitution
+  (define (subst lat occ new)
+    (cond ((null? lat) '())
+          ((eq? (car lat) occ) (cons new (cdr lat)))
+          (else (cons (car lat) (subst (cdr lat) occ new)))))
+  
+  (subst '(a b c) 'b 'new)
+  ; ==> (a new c)
+  
+  
+  ; Multiple substitution
+  (define (multisubst lat occ new)
+    (cond ((null? lat) '())
+          ((eq? (car lat) occ) (cons new (multisubst (cdr lat) occ new)))
+          (else (cons (car lat) (multisubst (cdr lat) occ new)))))
+
+  (multisubst '(a b b) 'b 'new)
   ```
   
 Lists are collections of atoms or lists enclosed by parentheses
