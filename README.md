@@ -414,4 +414,70 @@ scheme cheatsheet http://www.nada.kth.se/kurser/su/DA2001/sudata16/examination/s
   (reverse ’(a (b c) d (e (f)))) ==> ((e (f)) d (b c) a) ; reverse a list
   (null? ’()) ==> #t ; is the list empty?
   (null? ’(2)) ==> #f ; is the list empty?
+  
+  (list-ref '(a b c d) 2) ==> c ; 0 based indexing, find nth element in the list
   ```
+
+### Atom
+
+An atom is a string of letters, digits, or characters other than ( or ) - no spaces, either
+
+  ```scheme
+  'atom
+  'turkey
+  '1492
+  'abc$2
+  
+  ; anything which is not a list is an atom
+  ; implementation of atom?
+  (define atom?
+    (lambda (x)
+      (and (not (pair? x)) (not (null? x)))))
+      
+      
+  ; A predicate check whether lst is a lat(a list of atoms)
+  ; definition lat ::= () | (cons atom lat)
+  (define lat?
+    (lambda (lst)
+     (cond ((null? lst) #t)
+           (else 
+            (and
+             (atom? (car lst)) 
+             (lat? (cdr lst)))))))
+             
+     
+  ; an alternate design, which also corresponds (perhaps not as closely) to the definition
+
+  (define alt-lat?
+    (lambda (lst)
+      (cond ((null? lst) #t)
+            ((atom? (car lst)) (alt-lat? (cdr lst)))
+            (else #f))))
+  ```
+  
+Lists are collections of atoms or lists enclosed by parentheses
+
+  ```scheme
+  '(atom turkey or)
+  '((atom turkey) or)
+  '()
+  ```
+
+### S-expression
+
+An s-exp ("s-expression") is either an atom, the empty list, or a list of s-exps
+
+  ```scheme
+  ()        ;is an s-exp
+
+  xyz       ;is an s-exp
+
+  (x y z)   ;is a list of s-exps, and hence an s-exp
+
+  ((x y) z) ;is a list of two s-exps, (x y) and z, and hence is itself an s-exp
+  
+  ; s-exp ::=  atom | () | (s-exp ... s-exp)
+  ; s-exp definition equal atom OR () OR (s-exp ... s-exp) 
+  ```
+  
+  
