@@ -1,5 +1,7 @@
 # Scheme-Notes
 
+scheme cheatsheet http://www.nada.kth.se/kurser/su/DA2001/sudata16/examination/schemeCheatsheet.pdf
+
 ## NOTE: Applicative order evaluation(aka eager evaluation) and Normal order evaluation(lazy evaluation)
   ``` scheme
   (define (try a b)
@@ -385,3 +387,31 @@
   - Linear iterative process
 
 
+
+## List and Tree
+
+  ```scheme
+  (quote (a b)) ==> (a b) ; quote suspends evaluation of the list
+  ’(a b) ==> (a b) ; quote suspends evaluation of the list
+  (car ’(a b)) ==> a ; get head of list (contents of address reg)
+  (car ’()) ==> ERROR: car: Wrong type in arg1 () ; expects a list!
+  (car ’((a) b)) ==> (a) ; get head of list, could be a list!
+  (cdr ’(a b)) ==> (b) ; get rest of list (contents of address reg)
+  (cdr ’()) ==> ERROR: car: Wrong type in arg1 () ; expects a list!
+  (car ’((a) a (b))) ==> (a (b)) ; get rest of list
+  (cons 3 ’()) ==> (3) ; put element on head of list
+  (cons ’(a) ’(b c d)) ==> ((a) b c d)
+  (cons "a" ’(b c)) ==> ("a" b c)
+  (list a 7 c) ==> (a 7 c) ; build a list from the operands
+  (list) ==> () ; build a list from the operands
+  (length ’(a b c)) ==> 3 ; what is the length of a list?
+  (length ’(a (b) (c d e))) ==> 3 ; what is the length of a list?
+  (length ’()) ==> 0 ; what is the length of a list?
+  (append ’(x) ’(y)) ==> (x y) ; append one list to another
+  (append ’(a) ’(b c d)) ==> (a b c d) ; append one list to another
+  (append ’(a (b)) ’((c))) ==> (a (b) (c)) ; append one list to another
+  (reverse ’(a b c)) ==> (c b a) ; reverse a list
+  (reverse ’(a (b c) d (e (f)))) ==> ((e (f)) d (b c) a) ; reverse a list
+  (null? ’()) ==> #t ; is the list empty?
+  (null? ’(2)) ==> #f ; is the list empty?
+  ```
