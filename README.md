@@ -263,6 +263,15 @@ scheme cheatsheet http://www.nada.kth.se/kurser/su/DA2001/sudata16/examination/s
 ## `Let` Syntax
 
   ```scheme
+  (define (test num)
+     (let ((x num))
+       (if #t
+           x
+	   (+ x 1))))
+  
+  (test 2)
+  ; ==> 2
+  
   ; let is Syntactic sugar for lambda followed by it's arguments that are first evaluted and then passed to the lambda which is then evaluated.
 
   ((let ((x 2))
