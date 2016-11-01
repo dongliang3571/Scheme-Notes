@@ -544,6 +544,7 @@ An atom is a string of letters, digits, or characters other than ( or ) - no spa
   (multisubst '(a b b) 'b 'new)
   ```
   
+ 
 Lists are collections of atoms or lists enclosed by parentheses
 
   ```scheme
@@ -551,6 +552,41 @@ Lists are collections of atoms or lists enclosed by parentheses
   '((atom turkey) or)
   '()
   ```
+
+### Map, Reduce(accumulate), Filter
+
+   ```scheme
+   ;;;;;;;;;; MAP ;;;;;;;;;;
+   (define (mymap f seq)
+     (cond ((null? seq) seq)
+       	   (else (cons (f (car seq))
+                       (mymap f (cdr seq))))))
+
+   (define (square a)
+     (* a a))
+
+   (mymap square '(1 2 3))
+   
+   
+   ;;;;;;;;; ACCUMULATE(Reduce) ;;;;;;;;;;
+   (define (accumulate op init seq)
+     (cond ((null? seq) init)
+       (else (op (car seq) (accumulate op init (cdr seq))))))
+
+   (accumulate + 3 '(1 2 3))
+   
+   
+   ;;;;;;;;; Filter ;;;;;;;;;
+   (define (filter pred seq)
+     (cond ((null? seq) seq)
+       	   ((pred (car seq)) (cons (car seq) (filter pred (cdr seq))))
+           (else (filter pred (cdr seq)))))
+
+   (define (greaterThanThree a)
+     (> a 3))
+
+   (filter greaterThanThree '(5 8 2))
+   ```
 
 ### S-expression
 
