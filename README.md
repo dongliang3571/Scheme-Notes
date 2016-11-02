@@ -606,3 +606,71 @@ An s-exp ("s-expression") is either an atom, the empty list, or a list of s-exps
   ```
   
   
+## Problem from class
+
+```scheme
+; Problem 4 (40 points)
+
+; In this problem, you are asked to implement and prove correct a procedure bfs for breadth-first
+; search of a binary tree.
+
+; Binary trees have nodes and branches, and leaves.  Leaves can be represented as atoms; binary trees
+; which are not just leaves can be represented as lists of the form
+
+;             (node left-subtree right-subtree)
+
+; For example, (13 (5 6 1) (45 7 18)) is a binary tree with root node 13, and left and right subtrees.
+; (5 6 1) is a binary tree with root node 5, left subtree 6 (which is a leaf), and right subtree 1 (also a leaf).
+
+; Given a binary tree t, and an element e, your bfs program is to return #t if e occurs as a node or leaf element of t,
+; and #f otherwise.  Thus, referring to the example just given as sample-tree, (bfs sample-tree 0) is #f, while
+; (bfs sample-tree 13), (bfs sample-tree 5) and (bfs sample-tree 18) are all #t.
+
+; You may assume that nodes and leaves are atoms.
+
+; You will want to write selectors appropriate for this data structure and then to make use of these in your
+; breadth-first search program. A constructor, say make-tree, could also be put to good use in setting up test data
+; for your function.
+
+
+; Recall from your algorithms course that breadth-first search proceeds by maintaining a list of
+; the subtrees that must be returned to.  When a node is reached, it is examined - if it is the
+; element searched for, return #t; otherwise, add its subtrees to the end of this
+; search list, and then continue the search.  If the search list is empty, the search has failed.
+; I leave it to you to work out what to do when a leaf is reached.
+
+; (13 (5 6 1) (45 7 18))
+;         13
+;       /   \
+;      5     45
+;     / \   / \
+;    6  1  7   18
+;
+; 13, 5, 45, 6, 1, 7, 18
+
+(define (make-tree node left-subtree right-subtree) (list node left-subtree right-subtree))
+(define (atom? node) (and (not (pair? node)) (not (null? node))))
+(define (has-left-branch? t) (not (atom? (cadr t))))
+(define (has-right-branch? t) (not (atom? (caddr t))))
+(define (left-subtree-node t) (caadr t))
+(define (right-subtree-node t) (caaddr t))
+(define (left-subtree t) (cadr t))
+(define (right-subtree t) (caddr t))
+(define (node subtree) (car subtree))
+
+(define (bfs t e)
+  (cond ((null? t) #f)
+        ((has-left-branch? t) (cond ((or (eq? e (node t)) (eq? e (left-subtree-node t))) #t)
+                                     ((has-right-branch? t) (cond ((or (eq? e (node t)) (eq? e (right-subtree-node t))) #t)
+                                                                   (else (or (bfs (left-subtree t) e) (bfs (right-subtree t) e)))))
+                                     (else (bfs (left-subtree t) e))))
+        ((has-right-branch? t) (cond ((or (eq? e (node t)) (eq? e (right-subtree-node t))) #t)
+                                      (else (bfs (right-subtree t) e))))
+        (else (or (eq? e (left-subtree t)) (eq? e (right-subtree t)) (eq? e (node t))))))
+
+(make-tree 13 '(5 (6 2 3) 1) '(45 7 18))
+
+(bfs (make-tree 13 '(5 (6 2 3) 1) '(45 7 18)) 7)
+
+
+```
